@@ -10,7 +10,7 @@ import java.net.URL
 //singleton pattern
 object NewsParser {
 
-    fun parserNews(link: String): List<News> {
+   suspend fun parserNews(link: String): List<News> {
         val listNews = arrayListOf<News>()
 
 
@@ -22,7 +22,7 @@ object NewsParser {
         val xmlPullParser = xmlPullParserFactory.newPullParser()
         xmlPullParser.setInput(inputStream, "utf-8")
 
-        val type = xmlPullParser.eventType
+        var type = xmlPullParser.eventType
 
         var news = News()
         var text = ""
@@ -63,7 +63,7 @@ object NewsParser {
                     }
                 }
             }
-            xmlPullParser.next()
+            type = xmlPullParser.next()
         }
         return listNews
     }
